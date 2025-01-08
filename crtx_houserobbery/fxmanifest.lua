@@ -14,7 +14,7 @@ shared_scripts {
 
 client_scripts {
     '@ox_lib/init.lua',
-    'client/*.lua'
+    'client/cl_main.lua'  -- Ensure the main client script is explicitly included
 }
 
 server_scripts {

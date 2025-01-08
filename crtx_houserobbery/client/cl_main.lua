@@ -1,4 +1,9 @@
 local animation = false
+local soundLevel = 0
+local maxSoundLevel = 100
+local soundIncreaseRate = 1
+local soundDecreaseRate = 0.5
+local soundCrouchRate = 0
 robbedHouses = {}
 robbedItems = {}
 CreateThread(function()
@@ -34,6 +39,37 @@ CreateThread(function()
             }
         })
     end
+end)
+
+CreateThread(function()
+    while true do
+        Wait(1000) -- Check every second
+        local playerPed = PlayerPedId()
+        if IsPedWalking(playerPed) then
+            soundLevel = math.min(soundLevel + soundIncreaseRate, maxSoundLevel)
+        elseif IsPedCrouching(playerPed) then
+            soundLevel = math.max(soundLevel - soundCrouchRate, 0)
+        else
+            soundLevel = math.max(soundLevel - soundDecreaseRate, 0)
+        end
+
+        if soundLevel >= maxSoundLevel then
+            TriggerEvent('spawnNPCWithBat')
+            soundLevel = 0 -- Reset sound level after NPC spawns
+        end
+    end
+end)
+
+AddEventHandler('spawnNPCWithBat', function()
+    local playerCoords = GetEntityCoords(PlayerPedId())
+    local npcHash = GetHashKey('a_m_m_hillbilly_01') -- Example NPC model
+    RequestModel(npcHash)
+    while not HasModelLoaded(npcHash) do
+        Wait(1)
+    end
+    local npc = CreatePed(4, npcHash, playerCoords.x + 2, playerCoords.y + 2, playerCoords.z, 0.0, true, false)
+    GiveWeaponToPed(npc, GetHashKey('WEAPON_BAT'), 1, false, true)
+    TaskCombatPed(npc, PlayerPedId(), 0, 16)
 end)
 
 AddEventHandler('stoleItems', function(data)

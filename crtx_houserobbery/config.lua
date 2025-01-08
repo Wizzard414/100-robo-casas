@@ -1,4 +1,14 @@
 Config = {}
+Config.SoundBar = {
+    MaxLevel = 100,
+    IncreaseRate = 1,
+    DecreaseRate = 0.5,
+    CrouchRate = 0,
+    NPC = {
+        Model = 'a_m_m_hillbilly_01',
+        Weapon = 'WEAPON_BAT'
+    }
+}
 Config.Interiors = {
     House1 = {
         Door = vec3(-174.7202, 502.5304, 137.4204),
