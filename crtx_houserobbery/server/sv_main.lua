@@ -28,9 +28,11 @@ AddEventHandler('crtxhouserobbery:stoleItems', function()
             exports.ox_inventory:AddItem(_source, 'WEAPON_PISTOL', 1)
         elseif chance >= 95 and chance <= 100 and exports.ox_inventory:CanCarryItem(_source, 'WEAPON_SAWNOFFSHOTGUN', 1) then
             exports.ox_inventory:AddItem(_source, 'WEAPON_SAWNOFFSHOTGUN', 1)
+        else
+            TriggerClientEvent('ox_lib:notify', _source, {type = 'error', title = 'Inventory Full', description = 'You cannot carry more items.'})
         end
     else
-        DropPlayer("bye cheater")
+        DropPlayer(_source, "bye cheater")
         TriggerServerEvent('crtx_cheater:Cheater', GetPlayerName(PlayerId()),amount)
 		return
     end
