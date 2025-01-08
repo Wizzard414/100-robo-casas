@@ -2,6 +2,10 @@ fx_version 'cerulean'
 game 'gta5' 
 lua54 'yes'
 
+dependencies {
+    'lockpick'
+}
+
 
 shared_scripts {
     '@es_extended/imports.lua',
