@@ -41,6 +41,10 @@ CreateThread(function()
     end
 end)
 
+function IsPedCrouching(ped)
+    return IsControlPressed(0, 36) -- Control index 36 is for crouch
+end
+
 CreateThread(function()
     while true do
         Wait(1000) -- Check every second
